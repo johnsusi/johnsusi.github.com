@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{{ page.title }}</title>
-        <meta name="viewport" content="width=device-width">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Documentation</title>
+	<meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+	
+	<!-- syntax highlighting CSS -->
+	<link rel="stylesheet" href="/css/syntax.css">
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="/css/main.css">
 
-    </head>
-    <body>
+	<!-- Minimal theme -->
+	<link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pygment_trac.css">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">{{ site.name }}</a></h1>
-            <a class="extra" href="/">home</a>
-            <a class="extra" href="/reversi">Reversi</a>
-          </div>
+</head>
+<body>
+<div class="wrapper">
+<header>
+Hello
+</header>
+<section>
+{{ content }} 
+</section>
+<footer class="footer contact">
+<div class="contact" style="text-align: right; float: left; padding-right: 5px">
+<p>	John Susi<br />
+	Software Developer<br />
+</p>
+</div>
+<div class="contact" style="text-align: left; float: left;">
+<p>
+<a href="https://github.com/johnsus">github.com/johnsusi</a><br />
+<a href="https://twitter.com/johnsusi">twitter.com/johnsusi</a><br />
+<a href="mailto:john@susi.se">john@susi.se</a>
+</p>
+</div>
+</footer>
 
-          {{ content }}
-
-          <div class="footer">
-            <div class="contact">
-              <p>
-                John Susi<br />
-                Software developer<br />
-                <a href="mailto:john@susi.se">john@susi.se</a>
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/johnsusi">github.com/johnsusi</a><br />
-                <a href="https://twitter.com/johnsusi">twitter.com/johnsusi</a><br />
-              </p>
-            </div>
-          </div>
-        </div>
-
-    </body>
+</div>
+</body>
 </html>
+
