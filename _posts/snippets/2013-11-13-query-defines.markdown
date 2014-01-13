@@ -2,7 +2,7 @@
 layout: post
 title:  "Query defines"
 date:   2013-11-13 10:45:00
-categories: c++ snippet
+categories: snippet c++
 ---
 
 Query compiler defines. (Works with clang and gcc atleast)
