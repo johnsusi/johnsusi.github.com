@@ -1,0 +1,1267 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://susi.se/blog/2025/02/02/setting-up-a-new-android-project-using-gradle/">
+      
+      
+        <link rel="prev" href="../../../01/26/setting-up-a-new-c-project/">
+      
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.2">
+    
+    
+      
+        <title>Setting up a new Android project using Gradle - John Susi</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.d7758b05.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-0DXCYFJNRK"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-0DXCYFJNRK",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-0DXCYFJNRK",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#setting-up-an-android-project-using-gradle-without-using-an-ide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="John Susi" class="md-header__button md-logo" aria-label="John Susi" data-md-component="logo">
+      
+  <img src="../../../../../images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            John Susi
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Setting up a new Android project using Gradle
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.04 7 9.54s-2.94 8.27-7 9.54c.95.3 1.95.46 3 .46a10 10 0 0 0 10-10A10 10 0 0 0 9 2"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="John Susi" class="md-nav__button md-logo" aria-label="John Susi" data-md-component="logo">
+      
+  <img src="../../../../../images/logo.png" alt="logo">
+
+    </a>
+    John Susi
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2025/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-evolution-of-android-build-systems-from-ant-to-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Evolution of Android Build Systems: From Ant to Gradle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-development-kit-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Java Development Kit (JDK)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gradle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#android-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Android SDK
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#top-level-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Top level files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Top level files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#settingsgradlekts" class="md-nav__link">
+    <span class="md-ellipsis">
+      settings.gradle.kts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradleproperties" class="md-nav__link">
+    <span class="md-ellipsis">
+      gradle.properties
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#localproperties" class="md-nav__link">
+    <span class="md-ellipsis">
+      local.properties
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#libsversionstoml" class="md-nav__link">
+    <span class="md-ellipsis">
+      libs.versions.toml
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#android-module-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Android module files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#android-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Android module
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Android module">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#buildsettingskts" class="md-nav__link">
+    <span class="md-ellipsis">
+      build.settings.kts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#androidmanifestxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      AndroidManifest.xml
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mainactivitykt" class="md-nav__link">
+    <span class="md-ellipsis">
+      MainActivity.kt
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activity_mainxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      activity_main.xml
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stringsxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      strings.xml
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stylesxml" class="md-nav__link">
+    <span class="md-ellipsis">
+      styles.xml
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-icon-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application Icon Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-and-running-your-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building and running your application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Building and running your application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#building-the-apk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building the APK
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-and-running-on-a-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing and Running on a Device
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cleaning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cleaning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-02-02 00:00:00+00:00" class="md-ellipsis">February 2, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              8 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+        <span class="md-tag">android</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">gradle</span>
+      
+    
+      
+      
+      
+        <span class="md-tag">kotlin</span>
+      
+    
+  </nav>
+
+
+
+<h1 id="setting-up-an-android-project-using-gradle-without-using-an-ide">Setting Up an Android project using Gradle without using an IDE</h1>
+<p><img alt="" src="../../../../../images/Gradle_logo.svg" /></p>
+<p>Modern Android development offers many tools to streamline setup, but understanding the build system is crucial for debugging, customizing, and scaling projects efficiently. While Android Studio provides an easy wizard to generate projects, blindly relying on it can be limiting.
+This article walks through the minimal manual setup of an Android project using Gradle, focusing on clarity and control over generated files. This guide provides a deeper understanding of how Gradle structures Android projects, empowering developers to make informed configuration decisions.</p>
+<!-- more -->
+
+<h2 id="the-evolution-of-android-build-systems-from-ant-to-gradle">The Evolution of Android Build Systems: From Ant to Gradle</h2>
+<p>Android development has undergone significant transformations since its inception in 2008. The tools and languages used to build Android applications have evolved to improve developer productivity, project scalability, and build performance.</p>
+<p><strong>Early Days: Apache Ant and Eclipse</strong>
+In the early years of Android, developers primarily used Eclipse IDE with the Android Development Tools (ADT) plugin. The build system was based on Apache Ant, a tool that required XML-based configuration and offered limited flexibility.</p>
+<p><strong>The Shift to Gradle and Android Studio</strong>
+In 2013, Android Studio was introduced as the official IDE, replacing Eclipse. Alongside it, Google adopted Gradle as the default build system, bringing:</p>
+<ul>
+<li>Declarative build scripts written in Groovy (later Kotlin).</li>
+<li>Dependency management via Maven repositories.</li>
+<li>Improved build performance with incremental compilation and parallel execution.</li>
+<li>Customizable build variants (e.g., debug, release, free version, pro version).</li>
+</ul>
+<p><strong>The Adoption of Kotlin</strong>
+For nearly a decade, Java was the primary language for Android development. In 2017, Google officially announced Kotlin as a first-class language for Android development. In 2019, Google announced that the Kotlin programming language is the preferred language for Android developers.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before setting up the project, ensure that the necessary tools are installed. This guide assumes a development environment with a <strong>Java Development Kit (JDK)</strong>, <strong>Gradle</strong>, and the <strong>Android Software Development Kit (SDK)</strong>.</p>
+<h3 id="java-development-kit-jdk">Java Development Kit (JDK)</h3>
+<p>Android development requires a Java runtime environment. For this setup, <strong>Eclipse Temurin JDK</strong> is used, but any compatible JDK version should work. The recommended version is <strong>JDK 17</strong>, as it aligns with the requirements of modern Android projects.</p>
+<ul>
+<li><strong>Download Eclipse Temurin JDK:</strong> <a href="https://adoptium.net/temurin/releases/">https://adoptium.net/temurin/releases/</a></li>
+<li>
+<p>Ensure that Java is installed by running:</p>
+<div class="highlight"><pre><span></span><code>java<span class="w"> </span>-version
+</code></pre></div>
+</li>
+</ul>
+<p>This should return the installed Java version. If Java is not installed or an incorrect version is displayed, update the system path or reinstall the JDK.</p>
+<h3 id="gradle">Gradle</h3>
+<p>Gradle is the build automation tool used to compile and package the Android application. While Gradle can be installed globally, this guide recommends using a <strong>project-specific Gradle wrapper</strong>, which ensures version consistency across different development environments.</p>
+<ul>
+<li><strong>Download Gradle:</strong> <a href="https://gradle.org/install/">https://gradle.org/install/</a></li>
+<li>
+<p>Verify installation by running:</p>
+<div class="highlight"><pre><span></span><code>gradle<span class="w"> </span>-v
+</code></pre></div>
+</li>
+<li>
+<p>Install the wrapper in your project folder by running:</p>
+<div class="highlight"><pre><span></span><code>gradle<span class="w"> </span>wrapper<span class="w"> </span>--gradle-version<span class="w"> </span><span class="m">8</span>.12.1
+</code></pre></div>
+</li>
+</ul>
+<h3 id="android-sdk">Android SDK</h3>
+<p>The Android SDK provides the necessary tools, libraries, and emulator support for developing and testing Android applications. There are two primary installation methods:</p>
+<ol>
+<li><strong>Using Android Studio (recommended)</strong> – Android Studio includes an SDK manager for easy installation.</li>
+<li><strong>Using the standalone command-line tools</strong> – If Android Studio is not required, the SDK can be installed separately.</li>
+</ol>
+<!-- -->
+
+<ul>
+<li><strong>Download Android Studio or SDK Tools:</strong> <a href="https://developer.android.com/studio#command-tools">https://developer.android.com/studio#command-tools</a></li>
+<li>After installation, verify the SDK location:<ul>
+<li>On macOS: <code>$HOME/Library/Android/sdk</code></li>
+<li>On Linux: <code>$HOME/Android/Sdk</code></li>
+<li>On Windows: <code>%LOCALAPPDATA%\Android\Sdk</code></li>
+</ul>
+</li>
+</ul>
+<p>Optionally, set the <code>ANDROID_SDK_ROOT</code> environment variable to point to the correct SDK path.</p>
+<p><div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANDROID_HOME</span><span class="o">=</span>/path/to/android/sdk
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$ANDROID_HOME</span>/platform-tools:<span class="nv">$PATH</span>
+</code></pre></div>
+Verify that you have a connected Android device by running:</p>
+<div class="highlight"><pre><span></span><code>adb<span class="w"> </span>devices
+</code></pre></div>
+<h2 id="project-structure">Project Structure</h2>
+<p>The folder structure for the project is organized as follows:</p>
+<div class="highlight"><pre><span></span><code>project-root/
+├── .gitignore
+├── gradle.properties
+├── local.properties
+├── settings.gradle.kts
+├── gradle
+│   └── libs.versions.toml
+└── src
+    └── androidApp
+        ├── build.gradle.kts
+        └── src
+            └── main
+                ├── AndroidManifest.xml
+                ├── kotlin
+                │   └── MainActivity.kt
+                └── res
+                    ├── drawable
+                    │   ├── ic_launcher_background.xml
+                    │   └── ic_launcher_foreground.xml
+                    ├── layout
+                    │   └── activity_main.xml
+                    ├── mipmap-anydpi-v26
+                    │   └── ic_launcher.xml
+                    └── values
+                        ├── strings.xml
+                        └── styles.xml
+</code></pre></div>
+<div class="admonition information">
+<p class="admonition-title">Information</p>
+<p>Android projects usually don't have modules under a <code>src</code> directory. If you preferr a more standard layout, put your modules
+in the root directory. Adopting a src layout aligns the project structure with other languages like dotnet, c++ and python.</p>
+</div>
+<h2 id="top-level-files">Top level files</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">settings.gradle.kts</td>
+<td style="text-align: left;">Defines project-level settings, including which modules should be included.          </td>
+</tr>
+<tr>
+<td style="text-align: left;">gradle.properties</td>
+<td style="text-align: left;">Stores global Gradle properties, like JVM arguments, versioning, or flags.</td>
+</tr>
+<tr>
+<td style="text-align: left;">local.properties</td>
+<td style="text-align: left;">Stores local machine-specific settings, such as the Android SDK path. This file is not meant for version control.</td>
+</tr>
+<tr>
+<td style="text-align: left;">.gitignore</td>
+<td style="text-align: left;">Defines files and directories that should not be tracked by Git, such as build artifacts, .gradle/, and local.properties.</td>
+</tr>
+<tr>
+<td style="text-align: left;">gradle/libs.versions.toml</td>
+<td style="text-align: left;"> Version catalog file that centralizes dependency versions.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="settingsgradlekts">settings.gradle.kts</h3>
+<p>This file configures where plugins are fetched from, where dependencies are fetched from and finally includes all modules that make up this project.</p>
+<div class="highlight"><pre><span></span><code><span class="n">pluginManagement</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">repositories</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">gradlePluginPortal</span><span class="p">()</span>
+<span class="w">        </span><span class="n">google</span><span class="p">()</span>
+<span class="w">        </span><span class="n">mavenCentral</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">dependencyResolutionManagement</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">repositoriesMode</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">RepositoriesMode</span><span class="p">.</span><span class="na">FAIL_ON_PROJECT_REPOS</span><span class="p">)</span>
+<span class="w">  </span><span class="n">repositories</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">google</span><span class="p">()</span>
+<span class="w">      </span><span class="n">mavenCentral</span><span class="p">()</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">rootProject</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;PROJECT NAME&gt;&quot;</span>
+
+<span class="n">include</span><span class="p">(</span><span class="s">&quot;:src:androidApp&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="gradleproperties">gradle.properties</h3>
+<p>This file declares global properties that can later be accessed in your build scripts as <code>project.properties["NAME"]</code>. I
+just use it to enable AndroidX which is a more modern support library for Android.</p>
+<div class="highlight"><pre><span></span><code><span class="na">android.useAndroidX</span><span class="o">=</span><span class="s">true</span>
+</code></pre></div>
+<h3 id="localproperties">local.properties</h3>
+<p>This optional file declares settings for the current user. This file should not be checked into version control.</p>
+<div class="highlight"><pre><span></span><code><span class="na">sdk.dir</span><span class="o">=</span><span class="s">/path/to/Library/Android/sdk</span>
+</code></pre></div>
+<p>You can also set the environment variable <code>ANDROID_SDK_ROOT</code>.</p>
+<h3 id="libsversionstoml">libs.versions.toml</h3>
+<p>The libs.versions.toml file centralizes dependency versions, ensuring consistency across different modules. Unlike manually defining versions inside build.gradle.kts, this method reduces redundancy and makes dependency upgrades easier.</p>
+<div class="highlight"><pre><span></span><code><span class="k">[versions]</span>
+<span class="na">android-compileSdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;35&quot;</span>
+<span class="na">android-minSdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;24&quot;</span>
+<span class="na">android-targetSdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;35&quot;</span>
+
+<span class="k">[libraries]</span>
+<span class="na">google-material = { group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.google.android.material&quot;</span><span class="na">, name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;material&quot;</span><span class="na">, version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1.12.0&quot;</span><span class="w"> </span><span class="na">}</span>
+
+<span class="k">[plugins]</span>
+<span class="na">android-application = { id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.android.application&quot;</span><span class="na">, version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;8.8.0&quot;</span><span class="w"> </span><span class="na">}</span>
+<span class="na">kotlin-android = { id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;org.jetbrains.kotlin.android&quot;</span><span class="na">, version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;2.1.10&quot;</span><span class="w"> </span><span class="na">}</span>
+</code></pre></div>
+<p>The contents of this file is referenced in other parts of the build. For instance, the version fields are used when setting
+up the android build.</p>
+<div class="highlight"><pre><span></span><code><span class="n">minSdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libs</span><span class="p">.</span><span class="na">versions</span><span class="p">.</span><span class="na">android</span><span class="p">.</span><span class="na">minSdk</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">toInt</span><span class="p">()</span>
+<span class="n">targetSdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libs</span><span class="p">.</span><span class="na">versions</span><span class="p">.</span><span class="na">android</span><span class="p">.</span><span class="na">targetSdk</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">toInt</span><span class="p">()</span>
+</code></pre></div>
+<p>This ensures that we use the same SDK values throughout the build.</p>
+<p>Libraries are imported in the modules like this:</p>
+<div class="highlight"><pre><span></span><code><span class="n">implementation</span><span class="p">(</span><span class="n">libs</span><span class="p">.</span><span class="na">google</span><span class="p">.</span><span class="na">material</span><span class="p">)</span>
+</code></pre></div>
+<p>As you can see, dashes are normalized into dots. </p>
+<p>It is also possible to reference versions directly.</p>
+<div class="highlight"><pre><span></span><code>[versions]
+material-version = &quot;1.12.0&quot;
+
+[libraries]
+google-material = { group = &quot;com.google.android.material&quot;, name = &quot;material&quot;, version.ref = &quot;material-version&quot; }
+</code></pre></div>
+<p>prefer avoiding extra indirection, even if it means updating a few duplicate versions manually.</p>
+<h2 id="android-module-files">Android module files</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">build.gradle.kts</td>
+<td style="text-align: left;">The main Gradle build script for the root project. It may define dependencies, repositories, or global Gradle settings.</td>
+</tr>
+<tr>
+<td style="text-align: left;">kotlin/MainActivity.kt</td>
+<td style="text-align: left;">The entry point of the Android app. This is the main activity that gets launched.</td>
+</tr>
+<tr>
+<td style="text-align: left;">res/drawable/</td>
+<td style="text-align: left;">Stores imageassets (icons, backgrounds, etc.).</td>
+</tr>
+<tr>
+<td style="text-align: left;">res/layout/activity_main.xml</td>
+<td style="text-align: left;">Defines the UI layout for MainActivity.</td>
+</tr>
+<tr>
+<td style="text-align: left;">res/values/strings.xml</td>
+<td style="text-align: left;">Stores app text values (e.g., "Welcome to Trailmaker").</td>
+</tr>
+<tr>
+<td style="text-align: left;">res/values/styles.xml</td>
+<td style="text-align: left;">Defines themes and styles for UI elements.</td>
+</tr>
+</tbody>
+</table>
+<p>Modules are defined under the <code>src</code> directory. Each module is included in the top level <code>settings.gradle.kts</code> using an <code>include</code> statement.</p>
+<h2 id="android-module">Android module</h2>
+<p>I tend to organize my modules under a <code>src</code> folder to keep things similar across different types of projects. This might not be the most common so if you prefer, put your modules in the root folder and adjust the includes accordingly.</p>
+<h3 id="buildsettingskts">build.settings.kts</h3>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">alias</span><span class="p">(</span><span class="n">libs</span><span class="p">.</span><span class="na">plugins</span><span class="p">.</span><span class="na">android</span><span class="p">.</span><span class="na">application</span><span class="p">)</span>
+<span class="w">    </span><span class="n">alias</span><span class="p">(</span><span class="n">libs</span><span class="p">.</span><span class="na">plugins</span><span class="p">.</span><span class="na">kotlin</span><span class="p">.</span><span class="na">android</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">kotlin</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="n">jvmToolchain</span><span class="p">(</span><span class="m">17</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">sourceSets</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">main</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">implementation</span><span class="p">(</span><span class="n">libs</span><span class="p">.</span><span class="na">google</span><span class="p">.</span><span class="na">material</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">android</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;namespace&gt;&quot;</span>
+<span class="w">    </span><span class="n">compileSdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libs</span><span class="p">.</span><span class="na">versions</span><span class="p">.</span><span class="na">android</span><span class="p">.</span><span class="na">compileSdk</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">toInt</span><span class="p">()</span>
+
+<span class="w">    </span><span class="n">buildFeatures</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">buildConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">compileOptions</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">sourceCompatibility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JavaVersion</span><span class="p">.</span><span class="na">VERSION_17</span>
+<span class="w">        </span><span class="n">targetCompatibility</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JavaVersion</span><span class="p">.</span><span class="na">VERSION_17</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">defaultConfig</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">applicationId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&lt;application id&gt;&quot;</span>
+<span class="w">        </span><span class="n">minSdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libs</span><span class="p">.</span><span class="na">versions</span><span class="p">.</span><span class="na">android</span><span class="p">.</span><span class="na">minSdk</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">toInt</span><span class="p">()</span>
+<span class="w">        </span><span class="n">targetSdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libs</span><span class="p">.</span><span class="na">versions</span><span class="p">.</span><span class="na">android</span><span class="p">.</span><span class="na">targetSdk</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">toInt</span><span class="p">()</span>
+<span class="w">        </span><span class="n">versionCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
+<span class="w">        </span><span class="n">versionName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1.0&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="androidmanifestxml">AndroidManifest.xml</h3>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;manifest</span><span class="w"> </span><span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span><span class="nt">&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;application</span>
+<span class="w">        </span><span class="na">android:icon=</span><span class="s">&quot;@mipmap/ic_launcher&quot;</span>
+<span class="w">        </span><span class="na">android:label=</span><span class="s">&quot;Demo App&quot;</span>
+<span class="w">        </span><span class="na">android:theme=</span><span class="s">&quot;@style/AppTheme&quot;</span>
+<span class="w">    </span><span class="nt">&gt;</span>
+
+<span class="w">        </span><span class="nt">&lt;activity</span>
+<span class="w">            </span><span class="na">android:name=</span><span class="s">&quot;.MainActivity&quot;</span>
+<span class="w">            </span><span class="na">android:exported=</span><span class="s">&quot;false&quot;</span>
+<span class="w">            </span><span class="na">android:launchMode=</span><span class="s">&quot;singleTop&quot;</span>
+<span class="w">        </span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;intent-filter&gt;</span>
+<span class="w">                </span><span class="nt">&lt;action</span><span class="w"> </span><span class="na">android:name=</span><span class="s">&quot;android.intent.action.MAIN&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                </span><span class="nt">&lt;category</span><span class="w"> </span><span class="na">android:name=</span><span class="s">&quot;android.intent.category.LAUNCHER&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/intent-filter&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/activity&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/application&gt;</span>
+
+<span class="nt">&lt;/manifest&gt;</span>
+</code></pre></div>
+<p><strong><code>&lt;application&gt;</code> element</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;application</span>
+<span class="w">    </span><span class="na">android:icon=</span><span class="s">&quot;@mipmap/ic_launcher&quot;</span>
+<span class="w">    </span><span class="na">android:label=</span><span class="s">&quot;Demo App&quot;</span>
+<span class="w">    </span><span class="na">android:theme=</span><span class="s">&quot;@style/AppTheme&quot;</span>
+<span class="nt">&gt;</span>
+</code></pre></div></p>
+<p>Defines the application-level settings. The attributes:</p>
+<ul>
+<li>android:icon="@mipmap/ic_launcher": Specifies the app’s launcher icon, located in the mipmap folder.</li>
+<li>android:label="Demo App": Sets the app’s name displayed to users.</li>
+<li>android:theme="@style/AppTheme": Applies a theme to the application, typically defined in res/values/styles.xml.</li>
+</ul>
+<p><strong><code>&lt;activity&gt;</code> element</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;activity</span>
+<span class="w">    </span><span class="na">android:name=</span><span class="s">&quot;.MainActivity&quot;</span>
+<span class="w">    </span><span class="na">android:exported=</span><span class="s">&quot;false&quot;</span>
+<span class="w">    </span><span class="na">android:launchMode=</span><span class="s">&quot;singleTop&quot;</span>
+<span class="nt">&gt;</span>
+</code></pre></div>
+<p>Defines an activity in the application.</p>
+<ul>
+<li>android:name=".MainActivity": The name of the activity. Since it starts with . (dot), it refers to com.yourpackage.MainActivity. It gets it's default value from <code>android.namespace</code> defined in <code>build.settings.kts</code>. It is entirely possible to name the MainActivity class something else.</li>
+<li>android:exported="false": Disallows the activity to be launched by external apps or system components.</li>
+<li>android:launchMode="singleTop": Ensures that if the activity is already at the top of the stack, a new instance is not created. Instead, onNewIntent() is called.</li>
+</ul>
+<p><strong><code>&lt;intent-filter&gt;</code> element</strong></p>
+<p><div class="highlight"><pre><span></span><code><span class="nt">&lt;intent-filter&gt;</span>
+<span class="w">    </span><span class="nt">&lt;action</span><span class="w"> </span><span class="na">android:name=</span><span class="s">&quot;android.intent.action.MAIN&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;category</span><span class="w"> </span><span class="na">android:name=</span><span class="s">&quot;android.intent.category.LAUNCHER&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/intent-filter&gt;</span>
+</code></pre></div>
+Defines how this activity can be launched.</p>
+<ul>
+<li>android.intent.action.MAIN: This makes MainActivity the entry point of the app.</li>
+<li>android.intent.category.LAUNCHER: Specifies that this activity should be shown in the launcher screen (app drawer).</li>
+</ul>
+<h3 id="mainactivitykt">MainActivity.kt</h3>
+<div class="highlight"><pre><span></span><code><span class="k">package</span><span class="w"> </span><span class="nn">&lt;namespace&gt;</span>
+
+<span class="k">import</span><span class="w"> </span><span class="nn">android.os.Bundle</span>
+<span class="k">import</span><span class="w"> </span><span class="nn">androidx.appcompat.app.AppCompatActivity</span>
+
+<span class="kd">final</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">MainActivity</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AppCompatActivity</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span><span class="w"> </span><span class="n">Bundle?)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">super</span><span class="p">.</span><span class="na">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+<span class="w">        </span><span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="na">layout</span><span class="p">.</span><span class="na">activity_main</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="activity_mainxml">activity_main.xml</h3>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+<span class="w">    </span><span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+<span class="w">    </span><span class="na">xmlns:app=</span><span class="s">&quot;http://schemas.android.com/apk/res-auto&quot;</span>
+<span class="w">    </span><span class="na">xmlns:tools=</span><span class="s">&quot;http://schemas.android.com/tools&quot;</span>
+<span class="w">    </span><span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="w">    </span><span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="w">    </span><span class="na">tools:context=</span><span class="s">&quot;.MainActivity&quot;</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+</code></pre></div>
+<h3 id="stringsxml">strings.xml</h3>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;resources&gt;</span>
+<span class="w">    </span><span class="nt">&lt;string</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;someName&quot;</span><span class="nt">&gt;</span>some<span class="w"> </span>string<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/resources&gt;</span>
+</code></pre></div>
+<h3 id="stylesxml">styles.xml</h3>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;resources&gt;</span>
+<span class="w">    </span><span class="nt">&lt;style</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;AppTheme&quot;</span><span class="w"> </span><span class="na">parent=</span><span class="s">&quot;Theme.MaterialComponents.DayNight.NoActionBar&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/resources&gt;</span>
+</code></pre></div>
+<h3 id="application-icon-setup">Application Icon Setup</h3>
+<p>In modern Android development, adaptive icons provide flexibility across different screen sizes and launcher designs. Instead of using multiple rasterized image files, adaptive icons use two layers:</p>
+<p>Foreground layer (ic_launcher_foreground.xml) – Contains the primary icon content.
+Background layer (ic_launcher_background.xml) – Defines the background shape or color.
+Icon definition (ic_launcher.xml) – Declares the adaptive icon setup.</p>
+<h2 id="building-and-running-your-application">Building and running your application</h2>
+<p>With the project set up, you can now build and run your Android application using Gradle.</p>
+<h3 id="building-the-apk">Building the APK</h3>
+<p>To compile the project and generate an APK, run the following command:</p>
+<div class="highlight"><pre><span></span><code>./gradlew<span class="w"> </span>assembleDebug
+</code></pre></div>
+<p>This will produce an APK in the src/androidApp/build/outputs/apk/debug/ directory. If you need a release build, use:</p>
+<div class="highlight"><pre><span></span><code>./gradlew<span class="w"> </span>assembleRelease
+</code></pre></div>
+<p>For release builds, ensure you have a signing configuration set up in your build.gradle.kts.</p>
+<h3 id="installing-and-running-on-a-device">Installing and Running on a Device</h3>
+<p>Once the APK is built, you can install it on a connected device or emulator:</p>
+<div class="highlight"><pre><span></span><code>./gradlew<span class="w"> </span>installDebug
+</code></pre></div>
+<p>This automatically installs the debug APK onto a device. If multiple devices or emulators are connected, specify the target device using:</p>
+<div class="highlight"><pre><span></span><code>adb<span class="w"> </span>-s<span class="w"> </span>&lt;device_id&gt;<span class="w"> </span>install<span class="w"> </span>src/androidApp/build/outputs/apk/debug/androidApp-debug.apk
+</code></pre></div>
+<p>You can launch the app manually from the device or via:</p>
+<div class="highlight"><pre><span></span><code>adb<span class="w"> </span>shell<span class="w"> </span>am<span class="w"> </span>start<span class="w"> </span>-n<span class="w"> </span>&lt;your.package.name&gt;/.MainActivity
+</code></pre></div>
+<p>Running in an Emulator
+If you’re testing on an emulator, ensure you have an AVD (Android Virtual Device) set up:</p>
+<div class="highlight"><pre><span></span><code>emulator<span class="w"> </span>-avd<span class="w"> </span>&lt;AVD_NAME&gt;
+</code></pre></div>
+<p>If you don’t have an AVD configured, create one using:</p>
+<div class="highlight"><pre><span></span><code>avdmanager<span class="w"> </span>create<span class="w"> </span>avd<span class="w"> </span>-n<span class="w"> </span>myEmulator<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;system-images;android-35;google_apis;x86_64&quot;</span>
+</code></pre></div>
+<p>Once the emulator is running, you can install and launch the app as described above.</p>
+<h3 id="cleaning">Cleaning</h3>
+<p>To ensure a fresh build, clear any cached outputs before rebuilding:</p>
+<p>./gradlew clean</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Wizards provide a lot of benefits when quickly trying something out, but as I have shown here, the machinery behind building
+an Android app is quite manageable by hand and increases the understanding of the build system.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://rocksolidcode.com/" target="_blank" rel="noopener" title="rocksolidcode.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://rocksolidcode.com/" target="_blank" rel="noopener" title="rocksolidcode.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M111.8 62.2C170.2 105.9 233 194.7 256 242.4c23-47.6 85.8-136.4 144.2-180.2 42.1-31.6 110.3-56 110.3 21.8 0 15.5-8.9 130.5-14.1 149.2-18.2 64.8-84.4 81.4-143.3 71.3C456 322 482.2 380 425.6 438c-107.4 110.2-154.3-27.6-166.3-62.9-1.7-4.9-2.6-7.8-3.3-7.8s-1.6 3-3.3 7.8c-12 35.3-59 173.1-166.3 62.9-56.5-58-30.4-116 72.5-133.5C100 314.6 33.8 298 15.7 233.1 10.4 214.4 1.5 99.4 1.5 83.9c0-77.8 68.2-53.4 110.3-21.8z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.f13b1293.min.js"></script>
+      
+    
+  </body>
+</html>

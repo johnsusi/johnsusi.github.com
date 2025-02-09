@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://susi.se/</loc>
+         <lastmod>2025-02-09</lastmod>
+    </url>
+    <url>
+         <loc>https://susi.se/strategy-pattern/</loc>
+         <lastmod>2025-02-09</lastmod>
+    </url>
+    <url>
+         <loc>https://susi.se/blog/</loc>
+         <lastmod>2025-02-09</lastmod>
+    </url>
+    <url>
+         <loc>https://susi.se/blog/tags/</loc>
+         <lastmod>2025-02-09</lastmod>
+    </url>
+    <url>
+         <loc>https://susi.se/blog/2025/01/26/setting-up-a-new-c-project/</loc>
+         <lastmod>2025-02-09</lastmod>
+    </url>
+    <url>
+         <loc>https://susi.se/blog/2025/02/02/setting-up-a-new-android-project-using-gradle/</loc>
+         <lastmod>2025-02-09</lastmod>
+    </url>
+    <url>
+         <loc>https://susi.se/blog/archive/2025/</loc>
+         <lastmod>2025-02-09</lastmod>
+    </url>
+</urlset>
